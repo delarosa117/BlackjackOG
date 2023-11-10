@@ -98,7 +98,6 @@ function playerHit() {
 
     if (playerScore > 21) {
         displayMessage("Player busts with a score of " + playerScore);
-        // Handle end of game, e.g., reveal dealer's hand, reset for a new game, etc.
     } else {
         displayMessage("Player hits and now has a score of " + playerScore);
     }
@@ -148,7 +147,6 @@ function determineWinner() {
 }
 
 function offerNewGame() {
-    // Add a message or a button for the player to start a new game
     displayMessage("Game over. Click 'New Game' to play again.");
 }
 
@@ -164,12 +162,10 @@ function resetGame() {
 }
 
 
-// Event listeners for player actions (hit, stand, etc.)
 document.getElementById("hitButton").addEventListener("click", playerHit);
 document.getElementById("standButton").addEventListener("click", playerStand);
 document.getElementById("resetButton").addEventListener("click", resetGame);
 
-// Ensure the HTML is fully loaded before starting the game
 document.addEventListener('DOMContentLoaded', function() {
     startGame();
 });
