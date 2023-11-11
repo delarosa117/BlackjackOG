@@ -1,7 +1,7 @@
 let deck = [];
 
-function createDeck() {
-    deck = []; 
+const createDeck = () => {
+    deck = [];
     const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
     const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace'];
 
@@ -14,44 +14,45 @@ function createDeck() {
             deck.push(card);
         }
     }
-}
+};
 
-function shuffleDeck() {
+const shuffleDeck = () => {
     for (let i = deck.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
         [deck[i], deck[j]] = [deck[j], deck[i]];
     }
-}
+};
 
-function dealCard() {
+const dealCard = () => {
     if (deck.length === 0) {
         console.log("Reshuffling the deck.");
         createDeck();
         shuffleDeck();
     }
     return deck.pop();
-}
+};
 
 let playerHand = [];
 let dealerHand = [];
 
 
 
-function displayCards(hand, elementId) {
-    const handDiv = document.getElementById(elementId);
+const displayCards = (hand, elementId) => {
+    const handDiv = document.querySelector(`#${elementId}`);
     handDiv.innerHTML = ''; // Clear current cards
     for (let card of hand) {
         handDiv.innerHTML += `<div class="card">${card.value} of ${card.suit}</div>`;
     }
-}
+};
 
-function displayMessage(message) {
-    const messageDiv = document.getElementById("gameMessages");
+const displayMessage = (message) => {
+    const messageDiv = document.querySelector("#gameMessages");
     messageDiv.innerText = message;
-}
+};
 
 
-function startGame() {
+
+const startGame = () => {
     createDeck();
     shuffleDeck();
 
@@ -66,9 +67,9 @@ function startGame() {
     displayCards(playerHand, 'playerHand');
     displayCards(dealerHand, 'dealerHand');
     displayMessage("Welcome to Blackjack! Your move.");
-}
+};
 
-function getScore(hand) {
+const getScore = (hand) => {
     let score = 0;
     let hasAce = false;
 
@@ -77,20 +78,20 @@ function getScore(hand) {
             score += 10;
         } else if (card.value === 'Ace') {
             hasAce = true;
-            score += 1; 
+            score += 1;
         } else {
             score += parseInt(card.value);
         }
     }
 
     if (hasAce && score <= 11) {
-        score += 10; 
+        score += 10;
     }
 
     return score;
-}
+};
 
-function playerHit() {
+const playerHit = () => {
     playerHand.push(dealCard());
 
     let playerScore = getScore(playerHand);
@@ -101,14 +102,14 @@ function playerHit() {
     } else {
         displayMessage("Player hits and now has a score of " + playerScore);
     }
-}
+};
 
-function playerStand() {
+const playerStand = () => {
     displayMessage("Player stands with a score of " + getScore(playerHand));
     dealerTurn();
-}
+};
 
-function dealerTurn() {
+const dealerTurn = () => {
     let dealerScore = getScore(dealerHand);
 
     while (dealerScore < 17) {
@@ -125,11 +126,11 @@ function dealerTurn() {
     }
 
     determineWinner();
-    offerNewGame(); 
-}
+    offerNewGame();
+};
 
 
-function determineWinner() {
+const determineWinner = () => {
     let playerScore = getScore(playerHand);
     let dealerScore = getScore(dealerHand);
 
@@ -144,13 +145,13 @@ function determineWinner() {
     } else {
         displayMessage("It's a tie! Both Player and Dealer have " + playerScore);
     }
-}
+};
 
-function offerNewGame() {
+const offerNewGame = () => {
     displayMessage("Game over. Click 'New Game' to play again.");
-}
+};
 
-function resetGame() {
+const resetGame = () => {
     playerHand = [];
     dealerHand = [];
 
@@ -159,13 +160,13 @@ function resetGame() {
 
     startGame();
     displayMessage("Game has been reset. New round starts.");
-}
+};
 
 
-document.getElementById("hitButton").addEventListener("click", playerHit);
-document.getElementById("standButton").addEventListener("click", playerStand);
-document.getElementById("resetButton").addEventListener("click", resetGame);
+document.querySelector("#hitButton").addEventListener("click", playerHit);
+document.querySelector("#standButton").addEventListener("click", playerStand);
+document.querySelector("#resetButton").addEventListener("click", resetGame);
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     startGame();
 });
